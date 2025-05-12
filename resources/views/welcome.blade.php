@@ -85,6 +85,10 @@
             <button type="button" class="back-btn" onclick="showStep1()">← Final Details</button>
         </div>
 
+        <div id="validationErrors" class="alert alert-danger" style="display: none;">
+            <p id="errorMessage"></p>
+        </div>
+
         <div class="donation-summary">
             <div class="d-flex justify-content-between mb-2">
                 <span>Donation</span>
@@ -124,4 +128,53 @@
     </div>
 </div>
 
+<script>
+    document.querySelector('.finish-btn').addEventListener('click', function(event) {
+        // Get form inputs
+        const donorName = document.querySelector('input[name="donor_name"]').value.trim();
+        const email = document.querySelector('input[name="email"]').value.trim();
+        const selectedAmount = document.querySelector('input[name="selected_amount"]').value;
+        const customAmount = document.querySelector('input[name="amount"]').value;
+        const errorContainer = document.getElementById('validationErrors');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Reset error container
+        errorContainer.style.display = 'none';
+        errorMessage.textContent = '';
+
+        // Check if fields are empty
+        if (!donorName) {
+            errorMessage.textContent = 'Please enter the donor\'s name.';
+            errorContainer.style.display = 'block';
+            event.preventDefault();
+            return;
+        }
+
+        if (!email) {
+            errorMessage.textContent = 'Please enter the donor\'s email.';
+            errorContainer.style.display = 'block';
+            event.preventDefault();
+            return;
+        }
+
+        // Validate email format
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            errorMessage.textContent = 'Please enter a valid email address.';
+            errorContainer.style.display = 'block';
+            event.preventDefault();
+            return;
+        }
+
+        // Check if either selected_amount or custom_amount is provided
+        if (!selectedAmount && !customAmount) {
+            errorMessage.textContent = 'Please select or enter a donation amount.';
+            errorContainer.style.display = 'block';
+            event.preventDefault();
+            return;
+        }
+
+        // If all validations pass, the form will submit normally
+    });
+</script>
 @endsection
