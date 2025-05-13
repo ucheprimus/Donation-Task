@@ -30,8 +30,7 @@ function initialize() {
 //  for dropdown
 function createCaretSpan() {
     const span = document.createElement('span');
-    span.className = 'caret';
-    span.textContent = '▼';
+
     return span;
 }
 
@@ -121,6 +120,7 @@ function showStep2() {
     }
     step1.style.display = 'none';
     step2.style.display = 'block';
+    
 }
 
 // Form submission with Stripe redirect
