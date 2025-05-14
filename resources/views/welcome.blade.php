@@ -102,6 +102,8 @@
                     </div>
 
                     <div class="overlay-content " style="background-color: white;">
+                        <div id="errorMessage" style="color: red; margin-bottom: 1em; display: none; text-align:center"></div>
+
                         <form id="donationForm" onsubmit="submitToStripe(); return false;">
                             <!-- STEP 1 -->
                             <div class="donation-form" id="step1">

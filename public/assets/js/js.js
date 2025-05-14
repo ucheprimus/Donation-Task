@@ -86,7 +86,7 @@
             if (customAmount) selectedAmount = customAmount;
 
             if (!selectedAmount || isNaN(selectedAmount) || selectedAmount <= 0) {
-                alert('Please enter a valid donation amount.');
+                showError('Please enter a valid donation amount.');
                 return;
             }
 
@@ -175,7 +175,7 @@
             }
 
             if (!baseAmount || isNaN(baseAmount) || parseFloat(baseAmount) <= 0) {
-                alert('Please select or enter a valid donation amount.');
+                showError('Failed to process donation. Please try again.');
                 loadingOverlay.style.display = 'none'; // Hide loading on error
                 return;
             }
@@ -194,7 +194,8 @@
             const donorName = formData.get('donor_name').trim();
             const email = formData.get('email').trim();
             if (!donorName || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                alert('Please provide a valid donor name and email.');
+                showError('Please provide a valid donor name and email.');
+                
                 loadingOverlay.style.display = 'none'; // Hide loading on error
                 return;
             }
@@ -212,13 +213,21 @@
                     if (data.payment_url) {
                         window.location.href = data.payment_url; // redirect = no need to hide overlay
                     } else {
-                        alert('Error: ' + (data.error || 'Unknown error'));
+                        showError('Error: ' + (data.error || 'Unknown error'));
                         loadingOverlay.style.display = 'none'; // Hide on error
                     }
                 })
                 .catch(err => {
                     console.error('Fetch error:', err);
-                    alert('Failed to process donation. Please try again.');
+                    showError('Failed to process donation. Please try again.');
                     loadingOverlay.style.display = 'none'; // Hide on failure
                 });
         }
+
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.innerText = message;
+            errorDiv.style.display = 'block';
+        }
+        
