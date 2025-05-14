@@ -12,5 +12,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::post('/donation/process', [PaymentController::class, 'processDonation'])->name('donation.process');
-Route::get('/donation/thank-you', [PaymentController::class, 'thankYou'])->name('donation.thank-you');
+Route::post('/donate', [PaymentController::class, 'processDonation']);
+Route::get('/donation/thank-you', [PaymentController::class, 'thankYou']);
